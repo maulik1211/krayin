@@ -16,6 +16,7 @@
         "khaled.alshamaa/ar-php": "^6.3",
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",
+        "laravel/octane": "^2.6",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.5",
@@ -29,7 +30,6 @@
         "krayin/krayin-package-generator": "dev-master",
         "laravel/pint": "^1.16",
         "laravel/sail": "^1.0.1",
-        "laravel/telescope": "^5.2",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
         "pestphp/pest": "^2.6",
@@ -71,7 +71,8 @@
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\Category\\": "packages/Webkul/Category/src"
         }
     },
     "autoload-dev": {

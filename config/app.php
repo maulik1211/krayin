@@ -194,7 +194,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TelescopeServiceProvider::class,
+       // App\Providers\TelescopeServiceProvider::class,
 
         /*
          * Webkul Service Providers...
@@ -216,6 +216,7 @@ return [
         Webkul\User\Providers\UserServiceProvider::class,
         Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
+        Webkul\Category\Providers\CategoryServiceProvider::class,
     ])->toArray(),
 
     /*

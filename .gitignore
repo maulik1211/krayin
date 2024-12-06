@@ -26,3 +26,10 @@ package-lock.json
 /vendor
 yarn.lock
 yarn-error.log
+
+**/caddy
+frankenphp
+frankenphp-worker.php
+database/mysql-database/
+database/redis-database/
+

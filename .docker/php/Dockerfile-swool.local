@@ -1,0 +1,63 @@
+# Stage 1: Use a standard PHP image to build extensions
+FROM php:8.3-cli as build
+
+# Install dependencies for building extensions
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    git \
+    unzip \
+    librabbitmq-dev \
+    libpq-dev \
+    libzip-dev \
+    supervisor \
+    libicu-dev
+
+RUN install-php-extensions \
+    gd \
+    pcntl \
+    opcache \
+    pdo \
+    pdo_mysql \
+    redis \
+    calendar \
+    zip \
+    intl
+
+# Stage 2: Use the Swoole-based image and copy extensions
+FROM phpswoole/swoole:5.1-php8.3
+
+# Copy PHP extensions from the build stage
+COPY --from=build /usr/local/lib/php/extensions/ /usr/local/lib/php/extensions/
+COPY --from=build /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
+COPY --from=build /usr/local/bin/ /usr/local/bin/
+
+# Copy Composer from the composer image
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install additional dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    supervisor \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /var/www/html
+
+# Copy Laravel application files into the container
+COPY . .
+
+# Set ownership and permissions
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
+
+# Install Laravel dependencies using Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# Copy additional configurations
+COPY ./.docker/php/php.ini /usr/local/etc/php/
+COPY ./.docker/etc/supervisor.d/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Set permissions for Laravel directories
+RUN chown -R www-data:www-data storage bootstrap/cache
+
+EXPOSE 62
+
+ENTRYPOINT ["php", "artisan", "octane:start", "--server=swoole", "--port=62", "--host=0.0.0.0"]

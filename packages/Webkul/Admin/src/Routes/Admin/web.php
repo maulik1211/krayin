@@ -49,3 +49,9 @@ require 'configuration-routes.php';
  * Rest routes.
  */
 require 'rest-routes.php';
+
+/**
+ * Rest routes.
+ */
+require 'tasks-routes.php';
+require 'category-routes.php';
